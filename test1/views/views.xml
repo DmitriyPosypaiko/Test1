@@ -1,29 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <odoo>
-  <record model="ir.ui.view" id="test1.list">
-    <field name="name">test1 list</field>
-    <field name="model">owner.owner</field>
-    <field name="arch" type="xml">
-      <tree>
-        <field name="owner"/>
-      </tree>
-    </field>
-  </record>
+  <!-- actions opening views on models -->
+  <record model="ir.actions.act_window" id="test1.action_window">
+      <field name="name">window</field>
+      <field name="res_model">test1.dog</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+  <!-- Top menu item -->
 
-    <act_window
-        id="Owner_action"
-        name="Owner"
-        res_model="owner.owner"
-
-    />
-    <menuitem
-        id="dogs_menu"
-        name="База собак"
-        action="Owner_action"
-        parent=""
+  <menuitem
+        id="dog_menu"
+        name="Base dogs"
         sequence="5"
-    />
+  />
+
+  <menuitem name="Menu 1" id="test1.menu_cat" parent="dog_menu"/>
+
+  <menuitem name="Dogs" id="test1.menu_dogs" parent="test1.menu_cat"
+              action="test1.action_window"/>
+
+    <record model="ir.ui.view" id="test1.list">
+      <field name="name">Huirbuir</field>
+      <field name="model">test1.dog</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="mather_id"/>
+          <field name="father_id"/>
+          <field name="owner_id"/>
+          <field name="bersday"/>
+          <field name="sex"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="dogs_form">
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="name">res.partner form</field>
+      <field name="model">res.partner</field>
+      <field name="arch" type="xml">
+        <xpath expr="//notebook" position="inside">
+          <page string="Dogs">
+            <field name="pets_ids"/>
+          </page>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="dog_form" model="ir.ui.view">
+      <field name="name">dog</field>
+        <field name="model">test1.dog</field>
+          <field name="arch" type="xml">
+            <form>
+              <sheet>
+                <group>
+                  <group>
+                    <field name="image" widget='image' class="oe_avatar"/>
+                    <field name="name"/>
+                    <field name="mather_id"/>
+                    <field name="father_id"/>
+                    <field name="owner_id"/>
+                    <field name="bersday"/>
+                    <field name="sex"/>
+                  </group>
+
+                  <!--<group>-->
+                    <!--<field name="father_id"/>-->
+                    <!--<field name="mather_id"/>-->
+                  <!--</group>-->
+
+                  <!--<group>-->
+                    <!--<field name="owner_id"/>-->
+                  <!--</group>-->
+                </group>
+              </sheet>
+            </form>
+          </field>
+    </record>
 
 </odoo>
     <!-- explicit list view definition -->
@@ -68,7 +122,7 @@
 
     <!-- Top menu item -->
 
-    <!-- <menuitem name="test1" id="test1.menu_root"/> -->
+     <!--<menuitem name="test1" id="test1.menu_root"/>-->
 
     <!-- menu categories -->
 
